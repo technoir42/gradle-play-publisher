@@ -5,6 +5,7 @@ import com.android.build.api.artifact.ArtifactType
 import com.android.build.gradle.api.ApkVariantOutput
 import com.android.build.gradle.internal.api.InstallableVariantImpl
 import com.android.build.gradle.internal.scope.InternalArtifactType
+import com.github.triplet.gradle.play.internal.uploadUniversalApkOrDefault
 import org.gradle.api.file.FileSystemLocation
 import org.gradle.api.file.RegularFile
 import java.io.File
@@ -55,6 +56,10 @@ internal fun PublishTaskBase.findApkFiles(allowSplits: Boolean): List<File>? {
         if (!allowSplits) {
             result = result.filter {
                 OutputType.valueOf(it.outputType) == OutputType.MAIN || it.filters.isEmpty()
+            }
+        } else if (!extension.config.uploadUniversalApkOrDefault) {
+            result = result.filter {
+                OutputType.valueOf(it.outputType) == OutputType.MAIN || it.filters.isNotEmpty()
             }
         }
         result.map { it.outputFile }

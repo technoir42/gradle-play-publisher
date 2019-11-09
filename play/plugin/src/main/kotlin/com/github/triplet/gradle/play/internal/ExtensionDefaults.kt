@@ -14,6 +14,8 @@ internal val PlayPublisherExtension.Config.userFractionOrDefault
     get() = userFraction ?: 0.1
 internal val PlayPublisherExtension.Config.resolutionStrategyOrDefault
     get() = resolutionStrategy ?: ResolutionStrategy.FAIL
+internal val PlayPublisherExtension.Config.uploadUniversalApkOrDefault
+    get() = uploadUniversalApk ?: true
 
 internal fun mergeExtensions(extensions: List<PlayPublisherExtension>): PlayPublisherExtension {
     requireNotNull(extensions.isNotEmpty()) { "At least one extension must be provided." }

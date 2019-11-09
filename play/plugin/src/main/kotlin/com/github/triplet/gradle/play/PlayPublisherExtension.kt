@@ -8,6 +8,7 @@ import com.github.triplet.gradle.play.internal.promoteTrackOrDefault
 import com.github.triplet.gradle.play.internal.releaseStatusOrDefault
 import com.github.triplet.gradle.play.internal.resolutionStrategyOrDefault
 import com.github.triplet.gradle.play.internal.trackOrDefault
+import com.github.triplet.gradle.play.internal.uploadUniversalApkOrDefault
 import com.github.triplet.gradle.play.internal.userFractionOrDefault
 import org.gradle.api.Action
 import org.gradle.api.tasks.Input
@@ -223,6 +224,17 @@ open class PlayPublisherExtension @JvmOverloads constructor(
     @get:Nested
     val retain: Retain = _config.retain
 
+    /**
+     * Indicates whether universal APK should be uploaded or not when APK splits are enabled.
+     * Defaults to true.
+     */
+    @get:Input
+    var uploadUniversalApk: Boolean
+        get() = _config.uploadUniversalApkOrDefault
+        set(value) {
+            _config.uploadUniversalApk = value
+        }
+
     /** Configure your app's retainable objects such as previous artifacts and OBB files. */
     @Suppress("unused") // Public API
     fun retain(action: Action<Retain>) {
@@ -274,6 +286,7 @@ open class PlayPublisherExtension @JvmOverloads constructor(
             var releaseStatus: ReleaseStatus? = null,
             var releaseName: String? = null,
             var artifactDir: File? = null,
+            var uploadUniversalApk: Boolean? = null,
 
             val retain: Retain = Retain()
     ) : Serializable
